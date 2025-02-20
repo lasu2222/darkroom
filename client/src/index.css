@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* iOS PWA optimizations */
+  @supports (-webkit-touch-callout: none) {
+    .ios-padding {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-background border-t;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mobile-content {
+    @apply pb-16;
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media print {
+  /* Hide navigation and UI controls */
+  header,
+  .print-hide {
+    display: none !important;
+  }
+
+  /* Reset background colors and shadows */
+  * {
+    background-color: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure text is readable */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Optimize card layout for printing */
+  .card {
+    break-inside: avoid;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  /* Format tables nicely */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Remove unnecessary spacing */
+  .space-y-4 {
+    margin-top: 10px;
+  }
+
+  /* Ensure page breaks don't occur in the middle of important content */
+  h1, h2, h3, h4, h5, h6,
+  table, figure, .card-header {
+    break-after: avoid;
+  }
+
+  /* Add page numbers */
+  @page {
+    margin: 2cm;
+  }
+
+  /* Print in portrait by default */
+  @page {
+    size: A4 portrait;
+  }
+}
